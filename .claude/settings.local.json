@@ -11,7 +11,8 @@
       "PowerShell(python -c \"import arcade; print\\(arcade.VERSION\\)\")",
       "PowerShell(py *)",
       "PowerShell(winget upgrade *)",
-      "PowerShell(python -c \"from PIL import Image; img = Image.open\\('images/shot.png'\\); print\\(img.size, img.mode\\)\")"
+      "PowerShell(python -c \"from PIL import Image; img = Image.open\\('images/shot.png'\\); print\\(img.size, img.mode\\)\")",
+      "Bash(.venv/Scripts/python.exe *)"
     ]
   }
 }
