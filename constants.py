@@ -1,0 +1,19 @@
+SCREEN_WIDTH = 1024
+SCREEN_HEIGHT = 640
+SCREEN_TITLE = "Space War"
+
+STAR_COUNT = 200
+
+SPRITE_SIZE = 16
+SPRITE_SCALE = 2
+
+SPRITESHEET_PATH = "images/spritesheet.png"
+
+PLAYER_SPEED = 250
+
+SHOT_SPEED = 400
+SHOT_ANIM_FPS = 8
+
+EXPLOSION_FPS = 12
+
+PLANET_IMAGES = [f"images/planet_{i}.png" for i in range(1, 7)]
