@@ -86,6 +86,29 @@ class Shot(arcade.Sprite):
             self.texture = self.textures[self._frame_index]
 
 
+EXPLOSION_FPS = 12
+
+
+class Explosion(arcade.Sprite):
+    def __init__(self, spritesheet: SpriteSheet, x: float, y: float):
+        super().__init__(spritesheet.get(0, 0), scale=SPRITE_SCALE)
+        self.textures = spritesheet.textures[0]
+        self.center_x = x
+        self.center_y = y
+        self._frame_timer = 0.0
+        self._frame_index = 0
+
+    def update(self, delta_time: float = 1 / 60):
+        self._frame_timer += delta_time
+        if self._frame_timer >= 1 / EXPLOSION_FPS:
+            self._frame_timer = 0.0
+            self._frame_index += 1
+            if self._frame_index >= len(self.textures):
+                self.remove_from_sprite_lists()
+                return
+            self.texture = self.textures[self._frame_index]
+
+
 PLANET_IMAGES = [f"images/planet_{i}.png" for i in range(1, 7)]
 
 
@@ -142,6 +165,8 @@ class GameWindow(arcade.Window):
         self.enemy_list = arcade.SpriteList()
         self.enemy_list.append(Enemy(self.spritesheet))
         self.shot_list = arcade.SpriteList()
+        self.explosion_spritesheet = SpriteSheet("images/Space Ships Explosion.png", 48, 48, cols=7, rows=1)
+        self.explosion_list = arcade.SpriteList()
         self.planet_list = arcade.SpriteList()
         for _ in range(3):
             self.planet_list.append(Planet())
@@ -158,6 +183,7 @@ class GameWindow(arcade.Window):
         self.enemy_list.clear()
         self.enemy_list.append(Enemy(self.spritesheet))
         self.shot_list.clear()
+        self.explosion_list.clear()
 
     def on_draw(self):
         self.clear()
@@ -166,6 +192,7 @@ class GameWindow(arcade.Window):
         self.planet_list.draw()
         self.enemy_list.draw()
         self.shot_list.draw()
+        self.explosion_list.draw()
         self.player_list.draw()
         arcade.draw_text(f"Score: {self.score}", 10, SCREEN_HEIGHT - 30,
                          arcade.color.YELLOW, 20, bold=True)
@@ -204,6 +231,8 @@ class GameWindow(arcade.Window):
                 self.planet_list.append(Planet())
         if self.game_over:
             return
+        for explosion in list(self.explosion_list):
+            explosion.update(delta_time)
         self.player.update(delta_time)
         if arcade.check_for_collision_with_list(self.player, self.planet_list):
             self.game_over = True
@@ -211,6 +240,7 @@ class GameWindow(arcade.Window):
         for enemy in list(self.enemy_list):
             enemy.update(delta_time)
             if enemy.center_y < -SPRITE_SIZE or arcade.check_for_collision(enemy, self.player):
+                self.explosion_list.append(Explosion(self.explosion_spritesheet, enemy.center_x, enemy.center_y))
                 enemy.remove_from_sprite_lists()
                 self.lives -= 1
                 if self.lives <= 0:
@@ -228,6 +258,7 @@ class GameWindow(arcade.Window):
             if hit_list:
                 shot.remove_from_sprite_lists()
                 for enemy in hit_list:
+                    self.explosion_list.append(Explosion(self.explosion_spritesheet, enemy.center_x, enemy.center_y))
                     enemy.remove_from_sprite_lists()
                     self.score += 1
 
