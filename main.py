@@ -109,6 +109,9 @@ class GameWindow(arcade.Window):
             if shot.center_y > SCREEN_HEIGHT + SPRITE_SIZE:
                 shot.remove_from_sprite_lists()
                 continue
+            if arcade.check_for_collision_with_list(shot, self.planet_list):
+                shot.remove_from_sprite_lists()
+                continue
             hit_list = arcade.check_for_collision_with_list(shot, self.enemy_list)
             if hit_list:
                 shot.remove_from_sprite_lists()
