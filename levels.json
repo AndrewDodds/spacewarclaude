@@ -1,0 +1,22 @@
+{
+  "levels": [
+    {
+      "name": "Level 1",
+      "max_enemies": "5",
+      "num_planets": "3",
+      "planet_max_speed": "30"
+    },
+    {
+      "name": "Level 2",
+      "max_enemies": "7",
+      "num_planets": "4",
+      "planet_max_speed": "50"
+    },
+    {
+      "name": "Level 3",
+      "max_enemies": "10",
+      "num_planets": "5",
+      "planet_max_speed": "80"
+    }
+  ]
+}
