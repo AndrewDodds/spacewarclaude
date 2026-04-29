@@ -12,7 +12,7 @@ class GameWindow(arcade.Window):
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
         arcade.set_background_color(arcade.color.BLACK)
         self.stars = [Star(randomize_y=True) for _ in range(STAR_COUNT)]
-        self.spritesheet = SpriteSheet(SPRITESHEET_PATH, SPRITE_SIZE, SPRITE_SIZE, cols=32, rows=32)
+        self.spritesheet = SpriteSheet(SPRITESHEET_PATH, SPRITE_SIZE*2, SPRITE_SIZE*2, cols=16, rows=16)
         self.shot_spritesheet = SpriteSheet("images/shot.png", SPRITE_SIZE, SPRITE_SIZE, cols=2, rows=1)
         self.explosion_spritesheet = SpriteSheet("images/Space Ships Explosion.png", 48, 48, cols=7, rows=1)
         self.player_list = arcade.SpriteList()

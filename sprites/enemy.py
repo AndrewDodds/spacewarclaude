@@ -8,7 +8,7 @@ class Enemy(arcade.Sprite):
     def __init__(self, spritesheet: SpriteSheet):
         row = random.randrange(spritesheet.rows)
         col = random.randrange(spritesheet.cols)
-        super().__init__(spritesheet.get(row, col), scale=SPRITE_SCALE)
+        super().__init__(spritesheet.get(row, col), scale=SPRITE_SCALE/2)
         self.center_x = random.randrange(SPRITE_SIZE, SCREEN_WIDTH - SPRITE_SIZE)
         self.center_y = SCREEN_HEIGHT + SPRITE_SIZE
         self.speed = random.randint(20, 100)
